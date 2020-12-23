@@ -21,7 +21,6 @@ lon<-lon[which(is.na(lon$sub_region_2)),8:14] %>%
   pivot_longer(!date,names_to='type',values_to='change')
 lon$type<-lon$type %>% str_replace_all('_percent_change_from_baseline','')
 
-
 #specifying dates
 #sg
 date<-c('2020/04/07','2020/06/02','2020/06/19','2020/12/28')
@@ -31,7 +30,7 @@ sgdates$date<- sgdates$date%>% as.Date(format='%Y/%m/%d')
 
 #yg
 date<-c('2020/03/31','2020/04/18','2020/05/14','2020/09/01','2020/09/22')
-measure<-c('Universal<br>travel ban','Partial<br>lockdown','Lockdown eased','Lockdown<br>(7 townships)','Stay-at-home<br>measures')
+measure<-c('Universal<br>travel ban','Partial<br>lockdown','Lockdown eased','Partial<br>lockdown','Stay-at-home<br>measures')
 ygdates<-cbind(date,measure) %>% as.data.frame()
 ygdates$date<- ygdates$date%>% as.Date(format='%Y/%m/%d')
 
@@ -129,7 +128,7 @@ server<-function(input,output){
   p
   }
   )
-  output$text<-renderText(sprintf("The data shows how visitors to (or time spent in) categorized places change compared to Google's baseline days. A baseline day represents a normal value for that day of the week. The baseline day is the median value from the 5‑week period Jan 3 – Feb 6, 2020. Google has made these reports available for an unspecified but limited period. As this is a live scraper, the link will stop functioning when Google takes its data offline. Reference dates are supplementary and not provided by Google.<br><br><b>For more info on the dataset please visit <a href='https://support.google.com/covid19-mobility/answer/9825414?hl=en&ref_topic=9822927'>this link.</b></a><br><br>Visit the <a href=https://www.linkedin.com/in/jonahfoong/> dashboard creator.</a><br>Link to <a href='https://github.com/jonfoong/covid_mobility_shiny'> Github repo.</a><br><br>Google LLC <i>'Google COVID-19 Community Mobility Reports'</i>.<br>https://www.google.com/covid19/mobility/ Accessed: %s.",Sys.Date()))
+  output$text<-renderText(sprintf("The data shows how visitors to (or time spent in) categorized places change compared to Google's baseline days. A baseline day represents a normal value for that day of the week. The baseline day is the median value from the 5‑week period Jan 3 – Feb 6, 2020. Google will be updating these reports for an unspecified but limited period. As this is a live scraper, the link will stop functioning when Google takes its data offline. Reference dates are supplementary and not provided by Google.<br><br><b>For more info on the dataset please visit <a href='https://support.google.com/covid19-mobility/answer/9825414?hl=en&ref_topic=9822927'>this link.</b></a><br><br>Visit the <a href=https://www.linkedin.com/in/jonahfoong/> dashboard creator.</a><br>Link to <a href='https://github.com/jonfoong/covid_mobility_shiny'> Github repo.</a><br><br>Google LLC <i>'Google COVID-19 Community Mobility Reports'</i>.<br>https://www.google.com/covid19/mobility/ Accessed: %s.",Sys.Date()))
 }
 shinyApp(ui, server)
 
