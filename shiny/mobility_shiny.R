@@ -41,7 +41,7 @@ londates<-cbind(date,measure) %>% as.data.frame()
 londates$date<- londates$date%>% as.Date(format='%Y/%m/%d')
 
 ## UI
-ui<-navbarPage(theme = shinytheme("flatly"),
+ui<-navbarPage(theme = shinytheme("united"),
                "Covid Mobility",
                tabPanel("Singapore",
                         downloadButton("downloadData1", " Export"),
