@@ -35,7 +35,7 @@ ygdates<-cbind(date,measure) %>% as.data.frame()
 ygdates$date<- ygdates$date%>% as.Date(format='%Y/%m/%d')
 
 #lon
-date<-c('2020/03/26','2020/07/04','2020/09/14','2020/09/24','2020/11/05','2020/12/02','2020/12/20','2021/1/4')
+date<-c('2020/03/26','2020/07/04','2020/09/14','2020/09/24','2020/11/05','2020/12/02','2020/12/20','2021/1/5')
 measure<-c('Lockdown 1','Lockdown<br>eased','Rule-of-six','Restricted<br>biz-hours','Lockdown 2','Tier 2','Tier 4','Lockdown 3')
 londates<-cbind(date,measure) %>% as.data.frame()
 londates$date<- londates$date%>% as.Date(format='%Y/%m/%d')
