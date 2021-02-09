@@ -29,8 +29,8 @@ sgdates<-cbind(date,measure) %>% as.data.frame()
 sgdates$date<- sgdates$date%>% as.Date(format='%Y/%m/%d')
 
 #yg
-date<-c('2020/03/31','2020/04/18','2020/05/14','2020/09/01','2020/09/22')
-measure<-c('Universal<br>travel ban','Partial<br>lockdown','Lockdown eased','Partial<br>lockdown','Stay-at-home<br>measures')
+date<-c('2020/03/31','2020/04/18','2020/05/14','2020/09/01','2020/09/22','2021/02/01')
+measure<-c('Universal<br>travel ban','Partial<br>lockdown','Lockdown eased','Partial<br>lockdown','Stay-at-home<br>measures','Military coup')
 ygdates<-cbind(date,measure) %>% as.data.frame()
 ygdates$date<- ygdates$date%>% as.Date(format='%Y/%m/%d')
 

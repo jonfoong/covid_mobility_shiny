@@ -5,8 +5,8 @@ account: discount-fireworks
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 3425423
-bundleId: 4020596
-url: https://discount-fireworks.shinyapps.io/covid_mobility/
-when: 1608679045.88762
+bundleId: 4058251
+url: https://jonfoong.shinyapps.io/covid_mobility/
+when: 1609797019.81235
 asMultiple: FALSE
 asStatic: FALSE
