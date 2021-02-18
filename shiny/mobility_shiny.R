@@ -8,16 +8,16 @@ dl<-'https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip'
 temp <- tempfile()
 download.file(dl,temp)
 
-sg<-read_csv(unz(temp,'2020_SG_Region_Mobility_Report.csv')) %>% .[,8:14] %>%
+sg<-read_csv(unz(temp,'2020_SG_Region_Mobility_Report.csv')) %>% .[,9:15] %>%
   pivot_longer(!date,names_to='type',values_to='change')
 sg$type<-sg$type %>% str_replace_all('_percent_change_from_baseline','')
 yg<-read_csv(unz(temp,'2020_MM_Region_Mobility_Report.csv')) %>%
-  filter(metro_area=='Yangon Metropolitan Area') %>% .[,8:14] %>%
+  filter(metro_area=='Yangon Metropolitan Area') %>% .[,9:15] %>%
   pivot_longer(!date,names_to='type',values_to='change')
 yg$type<-yg$type %>% str_replace_all('_percent_change_from_baseline','')
-lon<-read_csv(unz(temp,'2020_GB_Region_Mobility_Report.csv'),col_types = 'cccccccDiiiiii') %>%
+lon<-read_csv(unz(temp,'2020_GB_Region_Mobility_Report.csv'),col_types = 'ccccccccDiiiiii') %>%
   filter(sub_region_1=='Greater London')
-lon<-lon[which(is.na(lon$sub_region_2)),8:14] %>% 
+lon<-lon[which(is.na(lon$sub_region_2)),9:15] %>% 
   pivot_longer(!date,names_to='type',values_to='change')
 lon$type<-lon$type %>% str_replace_all('_percent_change_from_baseline','')
 
