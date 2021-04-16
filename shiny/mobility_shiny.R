@@ -8,15 +8,22 @@ dl<-'https://www.gstatic.com/covid19/mobility/Region_Mobility_Report_CSVs.zip'
 temp <- tempfile()
 download.file(dl,temp)
 
-sg<-read_csv(unz(temp,'2020_SG_Region_Mobility_Report.csv')) %>% .[,9:15] %>%
+sg<-rbind(read_csv(unz(temp,'2020_SG_Region_Mobility_Report.csv')) %>% .[,9:15],
+          read_csv(unz(temp,'2021_SG_Region_Mobility_Report.csv')) %>% .[,9:15]) %>%
   pivot_longer(!date,names_to='type',values_to='change')
 sg$type<-sg$type %>% str_replace_all('_percent_change_from_baseline','')
-yg<-read_csv(unz(temp,'2020_MM_Region_Mobility_Report.csv')) %>%
-  filter(metro_area=='Yangon Metropolitan Area') %>% .[,9:15] %>%
+
+yg<-rbind(read_csv(unz(temp,'2020_MM_Region_Mobility_Report.csv')) %>%
+  filter(metro_area=='Yangon Metropolitan Area') %>% .[,9:15],
+  read_csv(unz(temp,'2021_MM_Region_Mobility_Report.csv')) %>%
+    filter(metro_area=='Yangon Metropolitan Area') %>% .[,9:15]) %>%
   pivot_longer(!date,names_to='type',values_to='change')
 yg$type<-yg$type %>% str_replace_all('_percent_change_from_baseline','')
-lon<-read_csv(unz(temp,'2020_GB_Region_Mobility_Report.csv'),col_types = 'ccccccccDiiiiii') %>%
-  filter(sub_region_1=='Greater London')
+
+lon<-rbind(read_csv(unz(temp,'2020_GB_Region_Mobility_Report.csv'),col_types = 'ccccccccDiiiiii') %>%
+  filter(sub_region_1=='Greater London'),
+  read_csv(unz(temp,'2021_GB_Region_Mobility_Report.csv'),col_types = 'ccccccccDiiiiii') %>%
+    filter(sub_region_1=='Greater London'))
 lon<-lon[which(is.na(lon$sub_region_2)),9:15] %>% 
   pivot_longer(!date,names_to='type',values_to='change')
 lon$type<-lon$type %>% str_replace_all('_percent_change_from_baseline','')
@@ -41,7 +48,7 @@ londates<-cbind(date,measure) %>% as.data.frame()
 londates$date<- londates$date%>% as.Date(format='%Y/%m/%d')
 
 ## UI
-ui<-navbarPage(theme = shinytheme("united"),
+ui<-navbarPage(theme = shinytheme("flatly"),
                "Covid Mobility",
                tabPanel("Singapore",
                         downloadButton("downloadData1", " Export"),
@@ -128,7 +135,7 @@ server<-function(input,output){
   p
   }
   )
-  output$text<-renderText(sprintf("The data shows how visitors to (or time spent in) categorized places change compared to Google's baseline days. A baseline day represents a normal value for that day of the week. The baseline day is the median value from the 5‑week period Jan 3 – Feb 6, 2020. Google will be updating these reports for an unspecified but limited period. As this is a live scraper, the link will stop functioning when Google takes its data offline. Reference dates are supplementary and not provided by Google.<br><br><b>For more info on the dataset please visit <a href='https://support.google.com/covid19-mobility/answer/9825414?hl=en&ref_topic=9822927'>this link.</b></a><br><br>Visit the <a href=https://www.linkedin.com/in/jonahfoong/> dashboard creator.</a><br>Link to <a href='https://github.com/jonfoong/covid_mobility_shiny'> Github repo.</a><br><br>Google LLC <i>'Google COVID-19 Community Mobility Reports'</i>.<br>https://www.google.com/covid19/mobility/ Accessed: %s.",Sys.Date()))
+  output$text<-renderText(sprintf("The data shows how visitors to (or time spent in) categorized places change compared to Google's baseline days. A baseline day represents a normal value for that day of the week. The baseline day is the median value from the 5 week period Jan 3-Feb 6, 2020. Google will be updating these reports for an unspecified but limited period. As this is a live scraper, the link will stop functioning when Google takes its data offline. Reference dates are supplementary.<br><br><b>For more info on the dataset please visit <a href='https://support.google.com/covid19-mobility/answer/9825414?hl=en&ref_topic=9822927'>this link.</b></a><br><br>Visit the <a href=https://www.linkedin.com/in/jonahfoong/> dashboard creator.</a><br>Link to <a href='https://github.com/jonfoong/covid_mobility_shiny'> Github repo.</a><br><br>Google LLC <i>'Google COVID-19 Community Mobility Reports'</i>.<br>https://www.google.com/covid19/mobility/ Accessed: %s.",Sys.Date()))
 }
 shinyApp(ui, server)
 
